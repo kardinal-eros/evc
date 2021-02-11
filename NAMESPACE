@@ -1,0 +1,5 @@
+importFrom("vegsoup", decode, taxonomy, stackSpecies, sites, coordinates, stackSites, SpeciesTaxonomy, Vegsoup, decostand, "decostand<-", layers, coerce)
+importFrom("methods", "as")
+importFrom("stats", median)
+importFrom("utils", head, tail)
+exportPattern("^[[:alpha:]]+")
