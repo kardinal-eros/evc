@@ -25,5 +25,5 @@ install_github("rforge/vegsoup/pkg")
 
 install_github("kardinal-eros/evc")
 
-library(synoptic)
+library(evc)
 ```
