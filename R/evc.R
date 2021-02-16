@@ -1,3 +1,10 @@
+evcLookup <- function () {
+	file <- system.file("extdata", "EuroVegChecklistClasses.csv",
+                    package = "evc")
+	r <- read.csv(file, colClasses = "character")
+	return(r)	
+}
+
 evcCode <- function (obj) {
 	r <- strsplit(taxonomy(obj)$evc.class.code, "+", fixed = TRUE)
 	names(r) <- taxonomy(obj)$abbr
@@ -6,17 +13,7 @@ evcCode <- function (obj) {
 
 #	function to deparse evc class code string and cast to species by class matrix	
 evcClass <- function (obj, plot) {
-	#	complete set according to *evc1 classes.csv*
-	labels <- c("ADI", "AEL", "AEO", "ALN", "AMM", "ANA", "ARC", "ARE", "ART", "ASA",
-	"ASP", "AZO", "BID", "BRA", "BUL", "CAK", "CAN", "CHE", "COC", "COR", "CRI", "CRU",
-	"CRY", "CYM", "CYP", "CYT", "DAP", "DIG", "DRY", "EPI", "ERI", "FAG", "FEP", "FES",
-	"FRA", "GEN", "GER", "HAL", "HER", "IND", "ISO", "JUN", "KAL", "KLE", "KOB", "LAM",
-	"LAU", "LAV", "LEM", "LER", "LIT", "LOI", "LON", "LYG", "MOL", "MON", "MOQ", "MUG",
-	"MUL", "NAR", "NER", "OLE", "ONO", "ORY", "OXY", "PAP", "PAR", "PEG", "PHA", "PHR",
-	"PIC", "PIL", "POD", "POL", "POP", "POT", "PUB", "PUR", "PYR", "QUE", "QUI", "RHA",
-	"RHO", "ROB", "ROS", "RUM", "RUP", "SAB", "SAC", "SAG", "SAL", "SAX", "SCH", "SED",
-	"SES", "SIS", "SPA", "SUP", "TAM", "THE", "THL", "TOL", "TRA", "TRI", "TUB", "ULI",
-	"VIO", "VIR")
+	labels <- evcLookup()$evc.class.code
 	
 	#	subset plot
 	xi <- as(obj[ plot, ], "Vegsoup")
@@ -25,10 +22,9 @@ evcClass <- function (obj, plot) {
 	#	decompose class membership string  
 	ri <- evcCode(xi)
 
-	#	matrix of class memebrship	
+	#	matrix of class membership	
 	r <- matrix(nrow = length(ri), ncol = length(labels))
-	dimnames(r)[[ 1 ]] <- names(ri)
-	dimnames(r)[[ 2 ]] <- labels
+	dimnames(r) <- list(names(ri), labels)
 	r <- as.data.frame(r)
 	r1 <- r
 	r1[ ] <- FALSE
@@ -86,17 +82,7 @@ evcMatrix <- function (obj, select, restrict, weighted = TRUE) {
 
 #	function to transform evc classes to species and build Vegsoup object
 evc2vegsoup <- function (obj, restrict, select) {
-	#	complete set according to *evc1 classes.csv*
-	labels <- c("ADI", "AEL", "AEO", "ALN", "AMM", "ANA", "ARC", "ARE", "ART", "ASA",
-	"ASP", "AZO", "BID", "BRA", "BUL", "CAK", "CAN", "CHE", "COC", "COR", "CRI", "CRU",
-	"CRY", "CYM", "CYP", "CYT", "DAP", "DIG", "DRY", "EPI", "ERI", "FAG", "FEP", "FES",
-	"FRA", "GEN", "GER", "HAL", "HER", "IND", "ISO", "JUN", "KAL", "KLE", "KOB", "LAM",
-	"LAU", "LAV", "LEM", "LER", "LIT", "LOI", "LON", "LYG", "MOL", "MON", "MOQ", "MUG",
-	"MUL", "NAR", "NER", "OLE", "ONO", "ORY", "OXY", "PAP", "PAR", "PEG", "PHA", "PHR",
-	"PIC", "PIL", "POD", "POL", "POP", "POT", "PUB", "PUR", "PYR", "QUE", "QUI", "RHA",
-	"RHO", "ROB", "ROS", "RUM", "RUP", "SAB", "SAC", "SAG", "SAL", "SAX", "SCH", "SED",
-	"SES", "SIS", "SPA", "SUP", "TAM", "THE", "THL", "TOL", "TRA", "TRI", "TUB", "ULI",
-	"VIO", "VIR")
+	labels <- evcLookup()$evc.class.code
 		
 	X <- evcMatrix(obj, weighted = TRUE,
 			restrict = restrict,
