@@ -12,12 +12,12 @@ Work with Ecological Indicator Values.
 }
 
 \description{
-Summarize species cover within defined threshold in order to identify nutrient poor habitats.
+Summarize species cover within defined threshold in order to identify nutrient poor or wet habitats.
 }
 
 \usage{
 eivClean(x)
-eivThreshold(obj, plot, summary = TRUE)
+eivThreshold(obj, plot, threshold = 4, parameter = "eiv.n", greater = FALSE, summary = TRUE)
 }
 
 \arguments{
@@ -29,6 +29,15 @@ eivThreshold(obj, plot, summary = TRUE)
   }
   \item{ plot }{
     \code{character}. A rowname identifying a particular sample in a \code{Vegsoup*} object.
+  }
+  \item{ threshold }{
+    \code{integer}. Threshold value of ecological indicator value.
+  }
+  \item{ parameter }{
+    \code{character}. A column name identifying ecological indicator value (e.g. eiv.n or eiv.f).
+  }
+  \item{ greater }{
+    \code{logical}. TRUE equals \verb{>=} and FALSE \verb{<=}.
   }
   \item{ summary }{
     \code{logical}. Report summary.
