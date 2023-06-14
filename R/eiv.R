@@ -27,9 +27,9 @@ eivThreshold <- function (obj, plot, threshold = 4, parameter = "eiv.n", greater
 
 	#	apply treshold
 	if (greater) {
-		r$threshold <- r[[ parameter ]] >= threshold
+		r$threshold <- eivClean(r[[ parameter ]]) >= threshold
 	} else {
-		r$threshold <- r[[ parameter ]] <= threshold
+		r$threshold <- eivClean(r[[ parameter ]]) <= threshold
 	}
 
   # handle special values
