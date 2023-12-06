@@ -6,6 +6,27 @@ eivClean <- function (x) {
 }
 
 #	calculate median
+eivMedian <- function (obj, plot) {
+	# get plot
+	xi <- as(obj[ plot, ], "Vegsoup")
+	# discard decostand method
+	decostand(xi) <- NULL
+
+	# retrieve ecological indicator values (eiv)
+	r <- taxonomy(taxonomy(xi))
+	r <- r[, c(grep("abbr", names(r)), grep("taxon", names(r)), grep("eiv", names(r))) ]
+	r <- data.frame(
+			eiv.l.median = round(moeller(eivClean(r$eiv.l)), 2),
+			eiv.t.median = round(moeller(eivClean(r$eiv.t)), 2),
+			eiv.k.median = round(moeller(eivClean(r$eiv.k)), 2),			
+			eiv.f.median = round(moeller(eivClean(r$eiv.f)), 2),
+			eiv.r.median = round(moeller(eivClean(r$eiv.r)), 2),
+			eiv.n.median = round(moeller(eivClean(r$eiv.n)), 2))
+			
+	return(r)
+}
+
+#	calculate treshold cover
 eivThreshold <- function (obj, plot, threshold = 4, parameter = "eiv.n", greater = FALSE, summary = TRUE) {
 	# get plot
 	xi <- as(obj[ plot, ], "Vegsoup")

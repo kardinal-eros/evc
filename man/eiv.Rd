@@ -5,6 +5,7 @@
 \alias{Ellenberg ecological indicator values}
 \alias{eiv}
 \alias{eivClean}
+\alias{eivMedian}
 \alias{eivThreshold}
 
 \title{
@@ -17,6 +18,7 @@ Summarize species cover within defined threshold in order to identify nutrient p
 
 \usage{
 eivClean(x)
+eivMedian(obj, plot)
 eivThreshold(obj, plot, threshold = 4, parameter = "eiv.n", greater = FALSE, summary = TRUE)
 }
 
